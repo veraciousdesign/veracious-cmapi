@@ -107,7 +107,7 @@ public class CMApi {
 
 		if (optionalParameters != null) {
 			params.putAll(optionalParameters);
-			url += PHPUtils.buildQuery(optionalParameters);
+			url += "?" + PHPUtils.buildQuery(optionalParameters);
 		}
 
 		// create Signature
@@ -121,6 +121,13 @@ public class CMApi {
 				.map(p -> p.getKey() + "=\"" + p.getValue() + "\"")
 				.reduce((p1, p2) -> p1 + ", " + p2)
 				.orElse("");
+
+		// DEBUG output
+
+		LOGGER.debug("Nonce: {}", nonce);
+		LOGGER.debug("Timestamp: {}", timestamp);
+		LOGGER.debug("URL: {}", url);
+		LOGGER.debug("Parameter: {}", paramString);
 
 		// create request object
 
@@ -158,9 +165,10 @@ public class CMApi {
 
 			_response = EntityUtils.toString(response.getEntity());
 
+			// LOGGER.debug("Response: {}", _response);
+
 			_headers = new HashMap<String, String>();
 			for (Header header : response.getAllHeaders()) {
-				LOGGER.debug("{} -> {}", header.getName(), header.getValue());
 				_headers.put(header.getName(), header.getValue());
 			}
 
@@ -236,7 +244,15 @@ public class CMApi {
 		byte[] rawSignature = Base64.getEncoder()
 				.encode(PHPUtils.hmacSHA1(baseString, signingKey));
 
-		return new String(rawSignature);
+		String signature = new String(rawSignature);
+
+		// DEBUG Output
+
+		LOGGER.debug("Base String: {}", baseString);
+		LOGGER.debug("Signing Key: {}", signingKey);
+		LOGGER.debug("Signature: {}", signature);
+
+		return signature;
 	}
 
 	/**
@@ -299,7 +315,7 @@ public class CMApi {
 	 * 
 	 * @return <b>T</b> or <b>null</b>
 	 */
-	public <T extends AbstractResponseImpl<?>> T getResponse(Class<T> clazz) throws IOException {
+	public <T extends AbstractResponseImpl<?>> T getResponse(Class<T> clazz) {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			return mapper.readValue(getResponse(), clazz);

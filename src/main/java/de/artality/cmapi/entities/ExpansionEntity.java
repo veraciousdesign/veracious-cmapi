@@ -1,4 +1,4 @@
-package de.artality.cmapi.models.entities;
+package de.artality.cmapi.entities;
 
 import java.util.Date;
 import java.util.List;
@@ -17,7 +17,15 @@ public class ExpansionEntity {
 	private boolean isReleased;
 	private long idGame;
 	private List<LinkEntity> links;
-	
+
+	public ExpansionEntity(long idExpansion, long idGame, String enName, String abbreviation, Date releaseDate) {
+		this.idExpansion = idExpansion;
+		this.idGame = idGame;
+		this.enName = enName;
+		this.abbreviation = abbreviation;
+		this.releaseDate = releaseDate;
+	}
+
 	public ExpansionEntity() {
 	}
 

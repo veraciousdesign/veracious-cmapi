@@ -2,7 +2,7 @@ package de.artality.cmapi.responses;
 
 import java.util.List;
 
-import de.artality.cmapi.models.entities.ExpansionEntity;
+import de.artality.cmapi.entities.ExpansionEntity;
 
 /**
  * Implementation of the response for the /games/:idGame/expansions endpoint

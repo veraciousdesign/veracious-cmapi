@@ -1,4 +1,4 @@
-package de.artality.cmapi.models.entities;
+package de.artality.cmapi.entities;
 
 import java.util.List;
 

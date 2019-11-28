@@ -2,7 +2,7 @@ package de.artality.cmapi.responses;
 
 import java.util.List;
 
-import de.artality.cmapi.models.entities.LinkEntity;
+import de.artality.cmapi.entities.LinkEntity;
 
 /**
  * Basic abstraction of the responses that the cardmarket api returns.

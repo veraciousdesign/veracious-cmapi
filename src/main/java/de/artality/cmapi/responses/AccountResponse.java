@@ -1,6 +1,6 @@
 package de.artality.cmapi.responses;
 
-import de.artality.cmapi.models.entities.AccountEntity;
+import de.artality.cmapi.entities.AccountEntity;
 
 /**
  * Implementation of the response for the /account endpoint

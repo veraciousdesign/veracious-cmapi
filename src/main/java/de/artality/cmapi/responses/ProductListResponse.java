@@ -12,11 +12,11 @@ package de.artality.cmapi.responses;
  * 
  * @see https://api.cardmarket.com/ws/documentation/API_2.0:Productlist
  */
-public class ProductsFileResponse extends AbstractResponseImpl<String> {
+public class ProductListResponse extends AbstractResponseImpl<String> {
 
 	protected String mime;
 
-	public ProductsFileResponse() {
+	public ProductListResponse() {
 	}
 
 	public String getProductsfile() {

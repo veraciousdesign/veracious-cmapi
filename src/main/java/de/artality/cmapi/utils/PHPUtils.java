@@ -56,7 +56,7 @@ public class PHPUtils {
 	 */
 	public static final String rawurlencode(String s) {
 		try {
-			return URLEncoder.encode(s, "UTF-8");
+			return URLEncoder.encode(s.replaceAll(" ", "+"), "UTF-8");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -100,8 +100,7 @@ public class PHPUtils {
 	}
 
 	/**
-	 * copy from uniqid() in php 
-	 * uses more_entropy = false
+	 * copy from uniqid() in php uses more_entropy = false
 	 * 
 	 * @see http://php.net/manual/en/function.uniqid.php
 	 * 
@@ -112,8 +111,7 @@ public class PHPUtils {
 	}
 
 	/**
-	 * copy from uniqid() in php 
-	 * uses prefix = "" & more_entropy = false
+	 * copy from uniqid() in php uses prefix = "" & more_entropy = false
 	 * 
 	 * @see http://php.net/manual/en/function.uniqid.php
 	 */
