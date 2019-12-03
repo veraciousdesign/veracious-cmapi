@@ -20,5 +20,13 @@ public interface Request<T extends AbstractResponseImpl<?>> {
 	 * @return T
 	 */
 	public abstract T getResponse();
+	
+	/**
+	 * Returns the amount of api calls you have left in the current timeframe
+	 * (usually the current day)
+	 * 
+	 * @return <b>int</b>
+	 */
+	public int getRequestsLeft();
 
 }

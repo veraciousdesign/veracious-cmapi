@@ -1,11 +1,14 @@
 package de.artality.cmapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ReprintEntity {
-	
+
 	private long idProduct;
 	private String expansion;
-	private int expansionIcon;
-	
+	private int expIcon;
+
 	public ReprintEntity() {
 	}
 
@@ -25,14 +28,12 @@ public class ReprintEntity {
 		this.expansion = expansion;
 	}
 
-	public int getExpansionIcon() {
-		return expansionIcon;
+	public int getExpIcon() {
+		return expIcon;
 	}
 
-	public void setExpansionIcon(int expansionIcon) {
-		this.expansionIcon = expansionIcon;
+	public void setExpIcon(int expIcon) {
+		this.expIcon = expIcon;
 	}
-	
-	
 
 }

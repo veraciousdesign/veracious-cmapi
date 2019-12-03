@@ -165,8 +165,6 @@ public class CMApi {
 
 			_response = EntityUtils.toString(response.getEntity());
 
-			// LOGGER.debug("Response: {}", _response);
-
 			_headers = new HashMap<String, String>();
 			for (Header header : response.getAllHeaders()) {
 				_headers.put(header.getName(), header.getValue());
@@ -320,6 +318,7 @@ public class CMApi {
 			ObjectMapper mapper = new ObjectMapper();
 			return mapper.readValue(getResponse(), clazz);
 		} catch (IOException e) {
+			LOGGER.error("Exception thrown during getResponse(): {}", e.getLocalizedMessage());
 			return null;
 		}
 	}

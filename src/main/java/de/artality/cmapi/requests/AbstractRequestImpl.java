@@ -2,6 +2,7 @@ package de.artality.cmapi.requests;
 
 import de.artality.cmapi.CMApi;
 import de.artality.cmapi.responses.AbstractResponseImpl;
+import de.artality.cmapi.utils.Headers;
 
 /**
  * Abstract implementation of the request interface that contains all the common
@@ -17,13 +18,20 @@ public abstract class AbstractRequestImpl<T extends AbstractResponseImpl<?>> imp
 		this.api = api;
 	}
 
-	/**
-	 * Returns the Response object for the Request
-	 * 
-	 * @return <b>T</b>
-	 */
+	@Override
 	public T getResponse() {
 		return api.getResponse(clazz);
+	}
+
+	@Override
+	public int getRequestsLeft() {
+		try {
+			int reqCount = Integer.valueOf(api.getHeader(Headers.REQUEST_COUNT));
+			int reqMax = Integer.valueOf(api.getHeader(Headers.REQUEST_MAX));
+			return reqMax - reqCount;
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 
 	@Override

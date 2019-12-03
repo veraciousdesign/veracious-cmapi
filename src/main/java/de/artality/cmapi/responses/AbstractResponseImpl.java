@@ -1,6 +1,9 @@
 package de.artality.cmapi.responses;
 
+import java.io.IOException;
 import java.util.List;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.artality.cmapi.entities.LinkEntity;
 
@@ -41,6 +44,16 @@ public abstract class AbstractResponseImpl<T> implements Response<T> {
 	 */
 	public void setLinks(List<LinkEntity> links) {
 		this._links = links;
+	}
+
+	@Override
+	public String toString() {
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			return mapper.writeValueAsString(this);
+		} catch (IOException e) {
+			return super.toString();
+		}
 	}
 
 }
