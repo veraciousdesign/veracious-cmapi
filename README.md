@@ -35,7 +35,7 @@ int idProduct = 1234;
 GetProductRequest req = new GetProductRequest(api, idProduct).submit();
 if (!req.isSuccess()) {
 	LOGGER.error("API call error: {}", req.getError());
-	// return
+	// return from the current process
 }
 
 ProductResponse res = req.getResponse();
