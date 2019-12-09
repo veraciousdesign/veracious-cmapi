@@ -4,19 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.artality.cmapi.CMApi;
-import de.artality.cmapi.responses.FindProductResponse;
+import de.artality.cmapi.requests.base.AbstractRequestImpl;
+import de.artality.cmapi.responses.ProductFindResponse;
 
 /**
  * Implementation of the request for the /products/find endpoint
  * 
  * @see https://api.cardmarket.com/ws/documentation/API_2.0:Find_Products
  */
-public class FindProductRequest extends AbstractRequestImpl<FindProductResponse> {
+public class ProductFindRequest extends AbstractRequestImpl<ProductFindResponse> {
 
 	private Map<String, String> optionalParams;
 
-	public FindProductRequest(CMApi api, String search) {
-		super(FindProductResponse.class, api);
+	public ProductFindRequest(CMApi api, String search) {
+		super(ProductFindResponse.class, api);
 		optionalParams = new HashMap<>();
 		optionalParams.put("search", search);
 	}
@@ -42,8 +43,9 @@ public class FindProductRequest extends AbstractRequestImpl<FindProductResponse>
 	}
 
 	@Override
-	public void submit() {
+	public ProductFindRequest submit() {
 		api.request("GET", "/products/find", optionalParams);
+		return this;
 	}
 
 }

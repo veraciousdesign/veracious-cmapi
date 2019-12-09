@@ -1,5 +1,7 @@
 package de.artality.cmapi.responses;
 
+import de.artality.cmapi.responses.base.AbstractResponseImpl;
+
 /**
  * Implementation of the response for the /productlist endpoint
  * 
@@ -15,9 +17,6 @@ package de.artality.cmapi.responses;
 public class ProductListResponse extends AbstractResponseImpl<String> {
 
 	protected String mime;
-
-	public ProductListResponse() {
-	}
 
 	public String getProductsfile() {
 		return getData();

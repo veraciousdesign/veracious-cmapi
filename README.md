@@ -1,4 +1,4 @@
-# arality-cmapi
+# artality-cmapi
 
 [Read the specifications on the Cardmarket API.](https://api.cardmarket.com/ws/documentation/API_2.0:Main_Page)
 
@@ -12,9 +12,10 @@ It is written in Java 11 to take advantage of some of the new features, but stil
 
 ```Java
 String url = "https://api.cardmarket.com/ws/v2.0/output.json/";
-String appToken = "";
-String appSecret = "";
-String accessToken = "";
+
+String appToken          = "";
+String appSecret         = "";
+String accessToken       = "";
 String accessTokenSecret = "";
 
 CMApi api = new CMApi(
@@ -30,16 +31,23 @@ CMApi api = new CMApi(
 
 ```Java
 int idProduct = 1234;
-GetProductRequest req = new GetProductRequest(api, idProduct);
-req.submit();
+
+GetProductRequest req = new GetProductRequest(api, idProduct).submit();
+if (!req.isSuccess()) {
+	LOGGER.error("API call error: {}", req.getError());
+	// return
+}
+
 ProductResponse res = req.getResponse();
+ProductEntity product = res.getData();
+
+// do something with the product
 ```
 
 
 ### TODO
 
 * Implementing the remaining Requests/Responses
-* Adding a nice and convenient way to check the success of the request directly inside the Request
 
 ****
 

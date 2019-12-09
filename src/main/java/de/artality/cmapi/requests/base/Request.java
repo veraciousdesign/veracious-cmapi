@@ -1,6 +1,6 @@
-package de.artality.cmapi.requests;
+package de.artality.cmapi.requests.base;
 
-import de.artality.cmapi.responses.AbstractResponseImpl;
+import de.artality.cmapi.responses.base.AbstractResponseImpl;
 
 /**
  * Basic abstraction of the requests that are needed for the api calls
@@ -10,23 +10,38 @@ import de.artality.cmapi.responses.AbstractResponseImpl;
 public interface Request<T extends AbstractResponseImpl<?>> {
 
 	/**
-	 * starts the api request
+	 * Starts the API call
 	 */
-	public void submit();
+	public Request<T> submit();
 
 	/**
-	 * returns the response from the api call
+	 * Returns if the last API call was successful. A successful call has a Status
+	 * Code of 2xx.
+	 * 
+	 * @return <b>boolean</b>
+	 */
+	public boolean isSuccess();
+
+	/**
+	 * Returns the Error Message of the last API call.
+	 * 
+	 * @return <b>String</b>
+	 */
+	public String getError();
+
+	/**
+	 * Returns the Response from the last API call
 	 * 
 	 * @return T
 	 */
-	public abstract T getResponse();
-	
+	public T getResponse();
+
 	/**
 	 * Returns the amount of api calls you have left in the current timeframe
 	 * (usually the current day)
 	 * 
 	 * @return <b>int</b>
 	 */
-	public int getRequestsLeft();
+	public int getRemainingRequests();
 
 }

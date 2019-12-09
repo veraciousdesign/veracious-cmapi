@@ -1,5 +1,7 @@
 package de.artality.cmapi.responses;
 
+import de.artality.cmapi.responses.base.AbstractResponseImpl;
+
 /**
  * Implementation of the response for the /stock/file endpoint
  * 
@@ -23,9 +25,6 @@ package de.artality.cmapi.responses;
 public class StockFileResponse extends AbstractResponseImpl<String> {
 
 	protected String mime;
-
-	public StockFileResponse() {
-	}
 
 	public String getStock() {
 		return getData();

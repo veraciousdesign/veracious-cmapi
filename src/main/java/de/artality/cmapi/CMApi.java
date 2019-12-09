@@ -23,7 +23,8 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import de.artality.cmapi.responses.AbstractResponseImpl;
+import de.artality.cmapi.responses.base.AbstractResponseImpl;
+import de.artality.cmapi.utils.Headers;
 import de.artality.cmapi.utils.PHPUtils;
 
 /**
@@ -32,6 +33,12 @@ import de.artality.cmapi.utils.PHPUtils;
 public class CMApi {
 
 	private static Logger LOGGER = LoggerFactory.getLogger("API");
+
+	/**
+	 * puffer value of the remaining requests that the api shouldn't pass to prevent
+	 * account blocking
+	 */
+	private static final int PUFFER = 10;
 
 	/*
 	 * Fields needed to connect to the cardmarket api
@@ -53,7 +60,10 @@ public class CMApi {
 
 	private int _status;
 	private String _error;
+
 	private Map<String, String> _headers;
+	private int _remainingRequests;
+
 	private String _response;
 
 	/**
@@ -87,6 +97,14 @@ public class CMApi {
 	 * @return <b>CMApi</b> current API object
 	 */
 	public CMApi request(String method, String endpoint, Map<String, String> optionalParameters, String payload) {
+
+		// check if the amount of remaining requests is still higher than the set puffer
+
+		if (getRemainingRequests() <= PUFFER) {
+			_status = 423; // LOCKED
+			_error = "The amount of remaining requests is critically low.";
+			return this;
+		}
 
 		String url = apiUrl + endpoint.replaceAll("^/+", ""); // remove leading "/"
 		String nonce = PHPUtils.uniqid();
@@ -165,10 +183,16 @@ public class CMApi {
 
 			_response = EntityUtils.toString(response.getEntity());
 
+			LOGGER.debug("HEADER:");
 			_headers = new HashMap<String, String>();
 			for (Header header : response.getAllHeaders()) {
+
+				LOGGER.debug("{} -> {}", header.getName(), header.getValue());
 				_headers.put(header.getName(), header.getValue());
+
 			}
+
+			_remainingRequests = calcRemainingRequests();
 
 			response.close();
 			client.close();
@@ -256,6 +280,8 @@ public class CMApi {
 	/**
 	 * returns the status code of the latest request
 	 * 
+	 * @see https://api.cardmarket.com/ws/documentation/API_2.0:Response_Codes
+	 * 
 	 * @return <b>int</b> status code
 	 */
 	public int getStatus() {
@@ -264,6 +290,8 @@ public class CMApi {
 
 	/**
 	 * returns the latest error message
+	 * 
+	 * @see https://api.cardmarket.com/ws/documentation/API_2.0:Response_Codes
 	 * 
 	 * @return <b>String</b> error message
 	 */
@@ -321,6 +349,41 @@ public class CMApi {
 			LOGGER.error("Exception thrown during getResponse(): {}", e.getLocalizedMessage());
 			return null;
 		}
+	}
+
+	/**
+	 * tries to calculate the last known remaining requests you are able to submit
+	 * to the api with your account
+	 * 
+	 * @return <b>int<b> -1 if the needed headers aren't found
+	 */
+	private int calcRemainingRequests() {
+		try {
+			int reqMax = Integer.valueOf(_headers.get(Headers.REQUEST_MAX));
+			int reqCount = Integer.valueOf(_headers.get(Headers.REQUEST_COUNT));
+			return reqMax - reqCount;
+		} catch (Exception e) {
+			return Integer.MAX_VALUE;
+		}
+	}
+
+	/**
+	 * returns the last known remaining requests you are able to submit to the api
+	 * with your account
+	 * 
+	 * @return <b>int<b>
+	 */
+	public int getRemainingRequests() {
+		return _remainingRequests;
+	}
+
+	/**
+	 * sets the last known remaining requests you are able to sumbit to the api
+	 * 
+	 * @param remainingRequests
+	 */
+	public void getRemainingRequests(int remainingRequests) {
+		_remainingRequests = remainingRequests;
 	}
 
 }

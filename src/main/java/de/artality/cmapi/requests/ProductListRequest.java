@@ -1,6 +1,7 @@
 package de.artality.cmapi.requests;
 
 import de.artality.cmapi.CMApi;
+import de.artality.cmapi.requests.base.AbstractRequestImpl;
 import de.artality.cmapi.responses.ProductListResponse;
 
 /**
@@ -14,7 +15,10 @@ public class ProductListRequest extends AbstractRequestImpl<ProductListResponse>
 		super(ProductListResponse.class, api);
 	}
 
-	public void submit() {
+	@Override
+	public ProductListRequest submit() {
 		api.request("GET", "/productlist");
+		return this;
 	}
+
 }

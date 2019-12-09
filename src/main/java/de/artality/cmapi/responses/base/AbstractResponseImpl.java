@@ -1,4 +1,4 @@
-package de.artality.cmapi.responses;
+package de.artality.cmapi.responses.base;
 
 import java.io.IOException;
 import java.util.List;

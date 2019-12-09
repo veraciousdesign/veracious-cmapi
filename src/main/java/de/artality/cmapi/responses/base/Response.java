@@ -1,4 +1,4 @@
-package de.artality.cmapi.responses;
+package de.artality.cmapi.responses.base;
 
 import java.util.List;
 

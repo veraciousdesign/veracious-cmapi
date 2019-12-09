@@ -1,8 +1,7 @@
-package de.artality.cmapi.requests;
+package de.artality.cmapi.requests.base;
 
 import de.artality.cmapi.CMApi;
-import de.artality.cmapi.responses.AbstractResponseImpl;
-import de.artality.cmapi.utils.Headers;
+import de.artality.cmapi.responses.base.AbstractResponseImpl;
 
 /**
  * Abstract implementation of the request interface that contains all the common
@@ -19,22 +18,26 @@ public abstract class AbstractRequestImpl<T extends AbstractResponseImpl<?>> imp
 	}
 
 	@Override
+	public abstract Request<T> submit();
+
+	@Override
+	public boolean isSuccess() {
+		return (api.getStatus() / 100 == 2);
+	}
+
+	@Override
+	public String getError() {
+		return String.format("%d %s", api.getStatus(), api.getLastError());
+	}
+
+	@Override
 	public T getResponse() {
 		return api.getResponse(clazz);
 	}
 
 	@Override
-	public int getRequestsLeft() {
-		try {
-			int reqCount = Integer.valueOf(api.getHeader(Headers.REQUEST_COUNT));
-			int reqMax = Integer.valueOf(api.getHeader(Headers.REQUEST_MAX));
-			return reqMax - reqCount;
-		} catch (Exception e) {
-			return -1;
-		}
+	public int getRemainingRequests() {
+		return api.getRemainingRequests();
 	}
-
-	@Override
-	public abstract void submit();
 
 }

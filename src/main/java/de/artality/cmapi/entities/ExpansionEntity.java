@@ -8,17 +8,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ExpansionEntity {
 
-	private long idExpansion;
+	private int idExpansion;
 	private String enName;
 	private List<LocalizationEntity> localization;
 	private String abbreviation;
 	private int icon;
 	private Date releaseDate;
 	private boolean isReleased;
-	private long idGame;
+	private int idGame;
 	private List<LinkEntity> links;
 
-	public ExpansionEntity(long idExpansion, long idGame, String enName, String abbreviation, Date releaseDate) {
+	public ExpansionEntity(int idExpansion, int idGame, String enName, String abbreviation, Date releaseDate) {
 		this.idExpansion = idExpansion;
 		this.idGame = idGame;
 		this.enName = enName;
@@ -29,11 +29,11 @@ public class ExpansionEntity {
 	public ExpansionEntity() {
 	}
 
-	public long getIdExpansion() {
+	public int getIdExpansion() {
 		return idExpansion;
 	}
 
-	public void setIdExpansion(long idExpansion) {
+	public void setIdExpansion(int idExpansion) {
 		this.idExpansion = idExpansion;
 	}
 
@@ -85,11 +85,11 @@ public class ExpansionEntity {
 		this.isReleased = isReleased;
 	}
 
-	public long getIdGame() {
+	public int getIdGame() {
 		return idGame;
 	}
 
-	public void setIdGame(long idGame) {
+	public void setIdGame(int idGame) {
 		this.idGame = idGame;
 	}
 

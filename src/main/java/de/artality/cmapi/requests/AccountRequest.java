@@ -1,6 +1,7 @@
 package de.artality.cmapi.requests;
 
 import de.artality.cmapi.CMApi;
+import de.artality.cmapi.requests.base.AbstractRequestImpl;
 import de.artality.cmapi.responses.AccountResponse;
 
 /**
@@ -15,7 +16,8 @@ public class AccountRequest extends AbstractRequestImpl<AccountResponse> {
 	}
 
 	@Override
-	public void submit() {
+	public AccountRequest submit() {
 		api.request("GET", "/account");
+		return this;
 	}
 }

@@ -1,6 +1,7 @@
 package de.artality.cmapi.requests;
 
 import de.artality.cmapi.CMApi;
+import de.artality.cmapi.requests.base.AbstractRequestImpl;
 import de.artality.cmapi.responses.ExpansionsResponse;
 
 /**
@@ -18,8 +19,9 @@ public class ExpansionRequest extends AbstractRequestImpl<ExpansionsResponse> {
 	}
 
 	@Override
-	public void submit() {
+	public ExpansionRequest submit() {
 		api.request("GET", "/games/" + idGame + "/expansions");
+		return this;
 	}
 
 }
