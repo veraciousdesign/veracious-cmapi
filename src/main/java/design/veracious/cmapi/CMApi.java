@@ -1,4 +1,4 @@
-package de.artality.cmapi;
+package design.veracious.cmapi;
 
 import java.io.IOException;
 import java.util.Base64;
@@ -23,9 +23,9 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import de.artality.cmapi.responses.base.AbstractResponseImpl;
-import de.artality.cmapi.utils.Headers;
-import de.artality.cmapi.utils.PHPUtils;
+import design.veracious.cmapi.responses.base.AbstractResponseImpl;
+import design.veracious.cmapi.utils.Headers;
+import design.veracious.cmapi.utils.PHPUtils;
 
 /**
  * Base implementation of the cardmarket API base endpoint

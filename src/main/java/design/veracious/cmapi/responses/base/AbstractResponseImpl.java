@@ -1,11 +1,11 @@
-package de.artality.cmapi.responses.base;
+package design.veracious.cmapi.responses.base;
 
 import java.io.IOException;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import de.artality.cmapi.entities.LinkEntity;
+import design.veracious.cmapi.entities.LinkEntity;
 
 /**
  * Abstract implementation of the response interface that contains all the

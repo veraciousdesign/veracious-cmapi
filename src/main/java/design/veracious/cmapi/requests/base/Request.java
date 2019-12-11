@@ -1,6 +1,6 @@
-package de.artality.cmapi.requests.base;
+package design.veracious.cmapi.requests.base;
 
-import de.artality.cmapi.responses.base.AbstractResponseImpl;
+import design.veracious.cmapi.responses.base.AbstractResponseImpl;
 
 /**
  * Basic abstraction of the requests that are needed for the api calls

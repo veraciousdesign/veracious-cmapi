@@ -1,6 +1,6 @@
-package de.artality.cmapi.responses;
+package design.veracious.cmapi.responses;
 
-import de.artality.cmapi.responses.base.AbstractResponseImpl;
+import design.veracious.cmapi.responses.base.AbstractResponseImpl;
 
 /**
  * Implementation of the response for the /productlist endpoint

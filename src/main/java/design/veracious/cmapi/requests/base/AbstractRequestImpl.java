@@ -1,7 +1,7 @@
-package de.artality.cmapi.requests.base;
+package design.veracious.cmapi.requests.base;
 
-import de.artality.cmapi.CMApi;
-import de.artality.cmapi.responses.base.AbstractResponseImpl;
+import design.veracious.cmapi.CMApi;
+import design.veracious.cmapi.responses.base.AbstractResponseImpl;
 
 /**
  * Abstract implementation of the request interface that contains all the common

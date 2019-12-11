@@ -1,8 +1,8 @@
-package de.artality.cmapi.requests;
+package design.veracious.cmapi.requests;
 
-import de.artality.cmapi.CMApi;
-import de.artality.cmapi.requests.base.AbstractRequestImpl;
-import de.artality.cmapi.responses.ProductGetResponse;
+import design.veracious.cmapi.CMApi;
+import design.veracious.cmapi.requests.base.AbstractRequestImpl;
+import design.veracious.cmapi.responses.ProductGetResponse;
 
 /**
  * Implementation of the request for the GET /products/:idProduct endpoint

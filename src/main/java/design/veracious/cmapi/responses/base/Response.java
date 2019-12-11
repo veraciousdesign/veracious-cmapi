@@ -1,8 +1,8 @@
-package de.artality.cmapi.responses.base;
+package design.veracious.cmapi.responses.base;
 
 import java.util.List;
 
-import de.artality.cmapi.entities.LinkEntity;
+import design.veracious.cmapi.entities.LinkEntity;
 
 /**
  * Basic abstraction of the responses that the cardmarket api returns.

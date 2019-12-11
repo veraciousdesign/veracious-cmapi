@@ -1,4 +1,4 @@
-package de.artality.cmapi.utils;
+package design.veracious.cmapi.utils;
 
 /**
  * A Collection of all the custom headers used by the API

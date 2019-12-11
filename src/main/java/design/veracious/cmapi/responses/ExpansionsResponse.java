@@ -1,9 +1,9 @@
-package de.artality.cmapi.responses;
+package design.veracious.cmapi.responses;
 
 import java.util.List;
 
-import de.artality.cmapi.entities.ExpansionEntity;
-import de.artality.cmapi.responses.base.AbstractResponseImpl;
+import design.veracious.cmapi.entities.ExpansionEntity;
+import design.veracious.cmapi.responses.base.AbstractResponseImpl;
 
 /**
  * Implementation of the response for the /games/:idGame/expansions endpoint

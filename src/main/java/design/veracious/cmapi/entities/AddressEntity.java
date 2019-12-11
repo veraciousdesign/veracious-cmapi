@@ -1,4 +1,4 @@
-package de.artality.cmapi.entities;
+package design.veracious.cmapi.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

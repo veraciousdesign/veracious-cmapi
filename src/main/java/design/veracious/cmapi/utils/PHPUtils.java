@@ -1,4 +1,4 @@
-package de.artality.cmapi.utils;
+package design.veracious.cmapi.utils;
 
 import java.net.URLEncoder;
 import java.nio.ByteBuffer;

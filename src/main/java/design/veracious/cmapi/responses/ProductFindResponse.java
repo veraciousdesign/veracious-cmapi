@@ -1,9 +1,9 @@
-package de.artality.cmapi.responses;
+package design.veracious.cmapi.responses;
 
 import java.util.List;
 
-import de.artality.cmapi.entities.ProductEntity;
-import de.artality.cmapi.responses.base.AbstractResponseImpl;
+import design.veracious.cmapi.entities.ProductEntity;
+import design.veracious.cmapi.responses.base.AbstractResponseImpl;
 
 /**
  * Implementation of the response for the /products/find endpoint

@@ -1,4 +1,4 @@
-package de.artality.cmapi.entities;
+package design.veracious.cmapi.entities;
 
 import java.sql.Date;
 
