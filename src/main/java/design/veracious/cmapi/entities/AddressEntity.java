@@ -1,5 +1,7 @@
 package design.veracious.cmapi.entities;
 
+import java.beans.Transient;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -11,7 +13,7 @@ public class AddressEntity {
 	private String zip;
 	private String city;
 	private String country;
-	
+
 	public AddressEntity() {
 	}
 
@@ -61,6 +63,29 @@ public class AddressEntity {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	@Transient
+	public String getVorname() {
+		try {
+			return getName().split(" ")[0];
+		} catch (Exception e) {
+			return "";
+		}
+	}
+
+	@Transient
+	public String getNachname() {
+		try {
+			return getName().split(" ")[1];
+		} catch (Exception e) {
+			return "";
+		}
+	}
+
+	@Transient
+	public String getCountryISO() {
+		return "D".equals(getCountry()) ? "DE" : getCountry();
 	}
 
 }

@@ -3,11 +3,15 @@ package design.veracious.cmapi.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SimpleExpansionEntity {
-	
+public class ProductExpansionEntity {
+
 	private long idExpansion;
 	private String enName;
 	private int expansionIcon;
+
+	public ProductExpansionEntity() {
+
+	}
 
 	public long getIdExpansion() {
 		return idExpansion;

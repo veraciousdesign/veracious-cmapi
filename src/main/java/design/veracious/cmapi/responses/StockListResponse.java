@@ -22,7 +22,7 @@ import design.veracious.cmapi.responses.base.AbstractResponseImpl;
  * 
  * @see https://api.cardmarket.com/ws/documentation/API_2.0:Stock_File
  */
-public class StockFileResponse extends AbstractResponseImpl<String> {
+public class StockListResponse extends AbstractResponseImpl<String> {
 
 	protected String mime;
 

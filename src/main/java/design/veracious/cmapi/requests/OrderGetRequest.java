@@ -2,7 +2,6 @@ package design.veracious.cmapi.requests;
 
 import design.veracious.cmapi.CMApi;
 import design.veracious.cmapi.requests.base.AbstractRequestImpl;
-import design.veracious.cmapi.requests.base.Request;
 import design.veracious.cmapi.responses.OrderGetResponse;
 
 /**
@@ -20,7 +19,7 @@ public class OrderGetRequest extends AbstractRequestImpl<OrderGetResponse> {
 	}
 
 	@Override
-	public Request<OrderGetResponse> submit() {
+	public OrderGetRequest submit() {
 		api.request("GET", "/order/" + idOrder);
 		return this;
 	}

@@ -2,6 +2,9 @@ package design.veracious.cmapi.entities;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderStateEntity {
 
 	private Date dateBought;
@@ -9,6 +12,8 @@ public class OrderStateEntity {
 	private Date dateSent;
 	private Date dateRecieved;
 
+	private String state;
+	
 	private Date dateCanceled;
 	private String reason;
 
@@ -72,6 +77,14 @@ public class OrderStateEntity {
 
 	public void setWasMergedInto(int wasMergedInto) {
 		this.wasMergedInto = wasMergedInto;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 	
 	

@@ -1,6 +1,7 @@
 package design.veracious.cmapi;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,11 +11,12 @@ import org.apache.http.Header;
 import org.apache.http.HttpHeaders;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -25,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import design.veracious.cmapi.responses.base.AbstractResponseImpl;
 import design.veracious.cmapi.utils.Headers;
+import design.veracious.cmapi.utils.HttpDelete;
 import design.veracious.cmapi.utils.PHPUtils;
 
 /**
@@ -38,7 +41,7 @@ public class CMApi {
 	 * puffer value of the remaining requests that the api shouldn't pass to prevent
 	 * account blocking
 	 */
-	private static final int PUFFER = 10;
+	private static final int PUFFER = 20;
 
 	/*
 	 * Fields needed to connect to the cardmarket api
@@ -62,7 +65,7 @@ public class CMApi {
 	private String _error;
 
 	private Map<String, String> _headers;
-	private int _remainingRequests;
+	private int _remainingRequests = Integer.MAX_VALUE;
 
 	private String _response;
 
@@ -97,8 +100,6 @@ public class CMApi {
 	 * @return <b>CMApi</b> current API object
 	 */
 	public CMApi request(String method, String endpoint, Map<String, String> optionalParameters, String payload) {
-
-		// check if the amount of remaining requests is still higher than the set puffer
 
 		if (getRemainingRequests() <= PUFFER) {
 			_status = 423; // LOCKED
@@ -166,6 +167,20 @@ public class CMApi {
 		}
 		request.setHeader(HttpHeaders.AUTHORIZATION, "OAuth " + paramString);
 
+		// add payload
+
+		if (payload != null && request instanceof HttpEntityEnclosingRequestBase) {
+			try {
+				((HttpEntityEnclosingRequestBase) request).setEntity(new StringEntity(payload));
+			} catch (UnsupportedEncodingException e) {
+				LOGGER.error("Exception while setting the payload: {}", e.getLocalizedMessage());
+
+				_status = 400;
+				_error = "The payload was not correct.";
+				return this;
+			}
+		}
+
 		// send the request
 
 		try {
@@ -178,16 +193,20 @@ public class CMApi {
 			StatusLine statusLine = response.getStatusLine();
 			_status = statusLine.getStatusCode();
 			_error = statusLine.getReasonPhrase();
+			
+			LOGGER.debug("Status: {}", _status);
+			LOGGER.debug("Reason: {}", _error);
 
 			// get all the needed information
 
 			_response = EntityUtils.toString(response.getEntity());
+			LOGGER.debug("Response: {}", _response);
 
-			LOGGER.debug("HEADER:");
+			LOGGER.debug("Headers");
 			_headers = new HashMap<String, String>();
 			for (Header header : response.getAllHeaders()) {
 
-				LOGGER.debug("{} -> {}", header.getName(), header.getValue());
+				LOGGER.debug("> {} -> {}", header.getName(), header.getValue());
 				_headers.put(header.getName(), header.getValue());
 
 			}
@@ -374,6 +393,7 @@ public class CMApi {
 	 * @return <b>int<b>
 	 */
 	public int getRemainingRequests() {
+		LOGGER.debug("Remaining Requests: {}", _remainingRequests);
 		return _remainingRequests;
 	}
 

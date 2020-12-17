@@ -3,6 +3,9 @@ package design.veracious.cmapi.entities;
 import java.sql.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ArticleEntity {
 
 	private int idArticle;
@@ -24,7 +27,7 @@ public class ArticleEntity {
 
 	private boolean inShoppingCard;
 
-	private ProductEntity product;
+	private ArticleProductEntity product;
 	private UserEntity seller;
 
 	private Date lastEdited;
@@ -138,11 +141,11 @@ public class ArticleEntity {
 		this.inShoppingCard = inShoppingCard;
 	}
 
-	public ProductEntity getProduct() {
+	public ArticleProductEntity getProduct() {
 		return product;
 	}
 
-	public void setProduct(ProductEntity product) {
+	public void setProduct(ArticleProductEntity product) {
 		this.product = product;
 	}
 

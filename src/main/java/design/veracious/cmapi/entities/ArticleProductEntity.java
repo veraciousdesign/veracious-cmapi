@@ -5,8 +5,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ProductEntity {
-
+public class ArticleProductEntity {
+	
 	private long idProduct;
 	private long idMetaproduct;
 
@@ -27,7 +27,7 @@ public class ProductEntity {
 	private String number;
 	private String rarity;
 
-	private ProductExpansionEntity expansion;
+	private String expansion;
 
 	private PriceGuideEntity priceGuide;
 
@@ -38,7 +38,7 @@ public class ProductEntity {
 
 	private List<LinkEntity> links;
 
-	public ProductEntity() {
+	public ArticleProductEntity() {
 	}
 
 	public long getIdProduct() {
@@ -153,11 +153,11 @@ public class ProductEntity {
 		this.rarity = rarity;
 	}
 
-	public ProductExpansionEntity getExpansion() {
+	public String getExpansion() {
 		return expansion;
 	}
 
-	public void setExpansion(ProductExpansionEntity expansion) {
+	public void setExpansion(String expansion) {
 		this.expansion = expansion;
 	}
 

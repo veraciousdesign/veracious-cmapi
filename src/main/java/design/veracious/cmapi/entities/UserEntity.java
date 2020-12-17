@@ -3,6 +3,9 @@ package design.veracious.cmapi.entities;
 import java.sql.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserEntity {
 
 	private int idUser;
@@ -24,6 +27,7 @@ public class UserEntity {
 	private String email;
 
 	private String vat;
+	private String legalInformation;
 
 	// 0: no risk
 	// 1: low risk
@@ -83,11 +87,11 @@ public class UserEntity {
 		this.isCommercial = isCommercial;
 	}
 
-	public boolean isSeller() {
+	public boolean getIsSeller() {
 		return isSeller;
 	}
 
-	public void setSeller(boolean isSeller) {
+	public void setIsSeller(boolean isSeller) {
 		this.isSeller = isSeller;
 	}
 
@@ -193,6 +197,14 @@ public class UserEntity {
 
 	public void setLinks(List<LinkEntity> links) {
 		this.links = links;
+	}
+
+	public String getLegalInformation() {
+		return legalInformation;
+	}
+
+	public void setLegalInformation(String legalInformation) {
+		this.legalInformation = legalInformation;
 	}
 
 }

@@ -1,4 +1,4 @@
-# artality-cmapi
+# veracious-cmapi
 
 [Read the specifications on the Cardmarket API.](https://api.cardmarket.com/ws/documentation/API_2.0:Main_Page)
 

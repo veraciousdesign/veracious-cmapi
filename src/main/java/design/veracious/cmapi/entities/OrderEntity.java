@@ -2,6 +2,9 @@ package design.veracious.cmapi.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderEntity {
 
 	private int idOrder;
@@ -38,11 +41,11 @@ public class OrderEntity {
 		this.idOrder = idOrder;
 	}
 
-	public boolean isBuyer() {
+	public boolean getIsBuyer() {
 		return isBuyer;
 	}
 
-	public void setBuyer(boolean isBuyer) {
+	public void setIsBuyer(boolean isBuyer) {
 		this.isBuyer = isBuyer;
 	}
 
@@ -62,11 +65,11 @@ public class OrderEntity {
 		this.buyer = buyer;
 	}
 
-	public boolean isPresale() {
+	public boolean getIsPresale() {
 		return isPresale;
 	}
 
-	public void setPresale(boolean isPresale) {
+	public void setIsPresale(boolean isPresale) {
 		this.isPresale = isPresale;
 	}
 

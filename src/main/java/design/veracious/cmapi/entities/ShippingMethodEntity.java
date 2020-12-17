@@ -35,19 +35,19 @@ public class ShippingMethodEntity {
 		this.price = price;
 	}
 
-	public boolean isLetter() {
+	public boolean getIsLetter() {
 		return isLetter;
 	}
 
-	public void setLetter(boolean isLetter) {
+	public void setIsLetter(boolean isLetter) {
 		this.isLetter = isLetter;
 	}
 
-	public boolean isInsured() {
+	public boolean getIsInsured() {
 		return isInsured;
 	}
 
-	public void setInsured(boolean isInsured) {
+	public void setIsInsured(boolean isInsured) {
 		this.isInsured = isInsured;
 	}
 

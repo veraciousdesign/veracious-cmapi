@@ -1,5 +1,13 @@
 package design.veracious.cmapi.requests.base;
 
+import java.io.StringWriter;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import design.veracious.cmapi.CMApi;
 import design.veracious.cmapi.responses.base.AbstractResponseImpl;
 
@@ -8,6 +16,8 @@ import design.veracious.cmapi.responses.base.AbstractResponseImpl;
  * functionality of all possible requests.
  */
 public abstract class AbstractRequestImpl<T extends AbstractResponseImpl<?>> implements Request<T> {
+
+	protected static Logger LOGGER = LoggerFactory.getLogger("REQUEST");
 
 	protected Class<T> clazz;
 	protected CMApi api;
@@ -38,6 +48,39 @@ public abstract class AbstractRequestImpl<T extends AbstractResponseImpl<?>> imp
 	@Override
 	public int getRemainingRequests() {
 		return api.getRemainingRequests();
+	}
+
+	/**
+	 * Converts the given object into an xml formatted String using the JAXB
+	 * marshaller.
+	 * 
+	 * @param obj Object that needs to be converted
+	 * @return String|null
+	 */
+	protected String createXML(Object obj) {
+		try {
+			Class<?> clazz = obj.getClass();
+
+			JAXBContext context = JAXBContext.newInstance(clazz);
+
+			Marshaller marshaller = context.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
+//			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+			StringWriter sw = new StringWriter();
+			marshaller.marshal(obj, sw);
+
+			String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" + sw.toString();
+
+			System.out.println(xml);
+
+			return xml;
+
+		} catch (Exception e) {
+			LOGGER.debug("Error while creating the .xml for the request: {}", e.getLocalizedMessage());
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
