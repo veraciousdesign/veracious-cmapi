@@ -8,10 +8,15 @@ import java.util.Map;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.http.client.methods.HttpUriRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Implementations of useful PHP functions
  */
 public class PHPUtils {
+
 	/**
 	 * copy from http_build_query() in php
 	 * 

@@ -5,6 +5,8 @@ public class ShippingMethodEntity {
 	private int idShippingMethod;
 	private String name;
 	private double price;
+	private int idCurrency;
+	private String currencyCode;
 	private boolean isLetter;
 	private boolean isInsured;
 
@@ -35,6 +37,22 @@ public class ShippingMethodEntity {
 		this.price = price;
 	}
 
+	public int getIdCurrency() {
+		return idCurrency;
+	}
+
+	public void setIdCurrency(int idCurrency) {
+		this.idCurrency = idCurrency;
+	}
+
+	public String getCurrencyCode() {
+		return currencyCode;
+	}
+
+	public void setCurrencyCode(String currencyCode) {
+		this.currencyCode = currencyCode;
+	}
+	
 	public boolean getIsLetter() {
 		return isLetter;
 	}

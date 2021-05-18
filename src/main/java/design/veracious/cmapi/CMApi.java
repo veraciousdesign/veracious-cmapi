@@ -6,6 +6,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.http.Header;
 import org.apache.http.HttpHeaders;
@@ -41,7 +42,7 @@ public class CMApi {
 	 * puffer value of the remaining requests that the api shouldn't pass to prevent
 	 * account blocking
 	 */
-	private static final int PUFFER = 20;
+	private static int PUFFER = 10;
 
 	/*
 	 * Fields needed to connect to the cardmarket api
@@ -100,6 +101,26 @@ public class CMApi {
 	 * @return <b>CMApi</b> current API object
 	 */
 	public CMApi request(String method, String endpoint, Map<String, String> optionalParameters, String payload) {
+
+		int triesLeft = 3;
+		do {
+			_request(method, endpoint, optionalParameters, payload);
+
+			if (_status / 100 == 5) { // 5xx -> server problems -> repeat request
+				_sleep(1000);
+				triesLeft--;
+
+				LOGGER.info("Server Problems: {} tries left.", triesLeft);
+			} else {
+				return this; // "success" -> return
+			}
+
+		} while (triesLeft > 0);
+
+		return this; // failure -> return anyway
+	}
+
+	private CMApi _request(String method, String endpoint, Map<String, String> optionalParameters, String payload) {
 
 		if (getRemainingRequests() <= PUFFER) {
 			_status = 423; // LOCKED
@@ -165,6 +186,12 @@ public class CMApi {
 			request = new HttpGet(url);
 			break;
 		}
+
+		// set headers
+
+		request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0 Firefox/26.0");
+		request.setHeader(HttpHeaders.ACCEPT, "*/*");
+		request.setHeader(HttpHeaders.CONNECTION, "keep-alive");
 		request.setHeader(HttpHeaders.AUTHORIZATION, "OAuth " + paramString);
 
 		// add payload
@@ -185,6 +212,12 @@ public class CMApi {
 
 		try {
 
+			// DUMP the request headers
+			LOGGER.debug("Request Headers");
+			for (Header header : request.getAllHeaders()) {
+				LOGGER.debug("> {} -> {}", header.getName(), header.getValue());
+			}
+
 			CloseableHttpClient client = HttpClients.createDefault();
 			CloseableHttpResponse response = client.execute(request);
 
@@ -193,7 +226,7 @@ public class CMApi {
 			StatusLine statusLine = response.getStatusLine();
 			_status = statusLine.getStatusCode();
 			_error = statusLine.getReasonPhrase();
-			
+
 			LOGGER.debug("Status: {}", _status);
 			LOGGER.debug("Reason: {}", _error);
 
@@ -277,13 +310,11 @@ public class CMApi {
 				.reduce((p1, p2) -> p1 + "&" + p2)
 				.orElse("");
 
-		String baseString = method.toUpperCase() + "&" + PHPUtils.rawurlencode(params.get("realm")) + "&"
-				+ PHPUtils.rawurlencode(paramString);
+		String baseString = method.toUpperCase() + "&" + PHPUtils.rawurlencode(params.get("realm")) + "&" + PHPUtils.rawurlencode(paramString);
 
 		String signingKey = PHPUtils.rawurlencode(appSecret) + "&" + PHPUtils.rawurlencode(accessTokenSecret);
 
-		byte[] rawSignature = Base64.getEncoder()
-				.encode(PHPUtils.hmacSHA1(baseString, signingKey));
+		byte[] rawSignature = Base64.getEncoder().encode(PHPUtils.hmacSHA1(baseString, signingKey));
 
 		String signature = new String(rawSignature);
 
@@ -404,6 +435,28 @@ public class CMApi {
 	 */
 	public void getRemainingRequests(int remainingRequests) {
 		_remainingRequests = remainingRequests;
+	}
+
+	/**
+	 * overrides the puffer value
+	 * 
+	 * @param puffer
+	 */
+	public void setPuffer(int puffer) {
+		PUFFER = puffer;
+	}
+
+	/**
+	 * pauses the thread for the given amount of milliseconds
+	 * 
+	 * @param millis
+	 */
+	private void _sleep(int millis) {
+		try {
+			TimeUnit.MILLISECONDS.sleep(millis);
+		} catch (Exception e) {
+			// nothing
+		}
 	}
 
 }

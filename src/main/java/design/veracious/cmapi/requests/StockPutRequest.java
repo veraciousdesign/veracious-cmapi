@@ -33,5 +33,18 @@ public class StockPutRequest extends AbstractRequestImpl<StockGetResponse> {
 		api.request("PUT", "/stock", xml);
 		return this;
 	}
-
 }
+
+/*
+<article>
+<idArticle>14449120</idArticle>
+<idLanguage>1</idLanguage>
+<comments>Edited through the API</comments>
+<count>4</count>
+<price>4</price>
+<condition>EX</condition>
+<isFoil>true</isFoil>
+<isSigned>false</isSigned>
+<isPlayset>false</isPlayset>
+</article>
+*/
